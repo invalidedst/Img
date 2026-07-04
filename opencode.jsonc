@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "teleopen": {
+      "npm": "@ai-sdk/anthropic",
+      "name": "Teleopen",
+      "options": {
+        "baseURL": "https://teleopen.space/snt/v1",
+        "apiKey": "SNT-WRLD-215920015462748752361720000-JDPXMCIABCGWDANSTMWIYSJM-67878126425859"
+      },
+      "models": {
+        "claude-opus-4-8": { "name": "Claude Opus 4.8" },
+        "claude-sonnet-4-6": { "name": "Claude Sonnet 4.6" },
+        "claude-haiku-4-5-20251001": { "name": "Claude Haiku 4.5" }
+      }
+    }
+  },
+  "model": "teleopen/claude-opus-4-8"
+}
