@@ -29,7 +29,7 @@ PACKAGES_KNOWN=(
   gui-apps/grim gui-apps/slurp gui-apps/swappy app-text/tesseract
   media-gfx/imagemagick media-video/ffmpeg
   sys-power/upower dev-python/evdev dev-python/pillow
-  sys-power/brightnessctl x11-misc/ddcutil
+  app-misc/brightnessctl app-misc/ddcutil
   net-wireless/blueman sys-auth/fprintd sci-libs/libqalculate
   media-libs/fontconfig media-fonts/dejavu media-fonts/liberation-fonts
   gui-apps/fuzzel dev-libs/glib app-i18n/translate-shell
