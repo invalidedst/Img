@@ -16,41 +16,42 @@ if ! eselect repository list | grep -q guru; then
 fi
 emerge --sync guru
 
-PACKAGES=(
-  # core / niri
-  niri wl-clipboard libnotify polkit networkmanager gnome-keyring
-  xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-gnome
-  xdg-user-dirs xdg-utils rsync git curl wget jq ripgrep dev-lang/python
-  kitty foot fish gnome-base/gvfs kde-apps/dolphin
-
-  # Qt6 / Quickshell stack
+# Пакеты с точной, проверенной категорией
+PACKAGES_KNOWN=(
+  gnome-base/gvfs
   dev-qt/qtdeclarative dev-qt/qtbase dev-qt/qtsvg dev-qt/qtwayland
   dev-qt/qt5compat dev-qt/qtimageformats dev-qt/qtmultimedia
   dev-qt/qtpositioning dev-qt/qtsensors dev-qt/qttools
-  quickshell kirigami kdialog qt6ct breeze-icons plasma-integration
-
-  # audio / media
+  gui-apps/quickshell
   media-video/pipewire media-video/wireplumber media-sound/playerctl
   media-sound/pavucontrol media-video/mpv media-sound/cava
-  media-sound/easyeffects yt-dlp socat
-
-  # screenshots / region tools
-  media-gfx/grim gui-apps/slurp media-gfx/swappy app-text/tesseract
+  media-sound/easyeffects
+  gui-apps/grim gui-apps/slurp gui-apps/swappy app-text/tesseract
   media-gfx/imagemagick media-video/ffmpeg
-
-  # input / hardware / idle
-  sys-power/upower wtype ydotool dev-python/evdev dev-python/pillow
-  sys-power/brightnessctl x11-misc/ddcutil sys-apps/geoclue
-  gui-apps/swayidle gui-apps/swaylock net-wireless/blueman sys-auth/fprintd
-  sci-libs/libqalculate
-
-  # theming / fonts / launcher
+  sys-power/upower dev-python/evdev dev-python/pillow
+  sys-power/brightnessctl x11-misc/ddcutil
+  net-wireless/blueman sys-auth/fprintd sci-libs/libqalculate
   media-libs/fontconfig media-fonts/dejavu media-fonts/liberation-fonts
-  gui-apps/fuzzel dev-libs/glib app-i18n/translate-shell kde-apps/kvantum
+  gui-apps/fuzzel dev-libs/glib app-i18n/translate-shell
+  app-misc/jq sys-apps/xdg-desktop-portal sys-apps/xdg-desktop-portal-gnome
 )
 
-echo "==> Устанавливаю пакеты (${#PACKAGES[@]} шт.)..."
-emerge -av "${PACKAGES[@]}"
+# Пакеты без категории — portage сам найдёт единственный подходящий пакет.
+# Если название окажется неоднозначным, emerge покажет список вариантов —
+# тогда допиши нужный полным путём (category/name) и перезапусти скрипт.
+PACKAGES_AUTO=(
+  niri wl-clipboard libnotify polkit networkmanager gnome-keyring
+  xdg-desktop-portal-gtk xdg-user-dirs xdg-utils rsync curl wget ripgrep
+  kitty foot fish dolphin
+  kirigami kdialog qt6ct breeze-icons plasma-integration
+  yt-dlp socat wtype ydotool geoclue swayidle swaylock kvantum
+)
+
+echo "==> Устанавливаю проверенные пакеты (${#PACKAGES_KNOWN[@]} шт.)..."
+emerge -av "${PACKAGES_KNOWN[@]}"
+
+echo "==> Устанавливаю остальное с автоопределением категории (${#PACKAGES_AUTO[@]} шт.)..."
+emerge -av "${PACKAGES_AUTO[@]}"
 
 echo "==> Ставлю Nerd Font (JetBrains Mono)..."
 FONT_DIR="${SUDO_USER:+/home/$SUDO_USER}/.local/share/fonts"
