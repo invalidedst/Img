@@ -1,3 +1,5 @@
 su -c 'python3 -c "import json;c=json.load(open(\"/etc/sing-box/config.json\"));print(\"keys:\",list(c));print(\"outbounds:\",[(x.get(\"type\"),x.get(\"tag\")) for x in c.get(\"outbounds\",[])])"'
 
 su -c "python3 -c 'import json; c=json.load(open(\"/etc/sing-box/config.json\")); print([(x.get(\"type\"),x.get(\"tag\"),x.get(\"listen_port\")) for x in c.get(\"inbounds\",[])])'"
+
+su -c 'python3 -c "import json;c=json.load(open(\"/etc/sing-box/config.json\"));print(\"final:\",c.get(\"route\",{}).get(\"final\"));print(\"groups:\",[(x.get(\"type\"),x.get(\"tag\"),x.get(\"default\")) for x in c.get(\"outbounds\",[]) if x.get(\"type\") in (\"selector\",\"urltest\")])"'
